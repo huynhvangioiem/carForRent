@@ -1,0 +1,26 @@
+{
+  "name": "tlait/carforrent",
+  "description": "This is project about rent car",
+  "authors": [
+    {
+      "name": "TLA IT",
+      "email": "em.huynh@nfq.asia"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Tlait\\CarForRent\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "prs-4": {
+      "Tlait\\CarForRent\\Tests\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9"
+  },
+  "require": {
+    "ext-json": "*"
+  }
+}
