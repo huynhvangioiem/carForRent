@@ -57,7 +57,7 @@ class Request
      */
     public function isGet(): bool
     {
-        if($this->getRequestMethod()=== self::methodGet)
+        if ($this->getRequestMethod() === self::methodGet)
             return true;
         return false;
     }

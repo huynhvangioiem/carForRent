@@ -172,6 +172,4 @@ class Response
     {
         $this->headers = $headers;
     }
-
-
 }
