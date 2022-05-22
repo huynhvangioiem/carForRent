@@ -31,7 +31,7 @@ class Request
      */
     public static function getFormParams()
     {
-        return [];
+        return $_REQUEST;
     }
 
     /**
@@ -57,6 +57,8 @@ class Request
      */
     public function isGet(): bool
     {
-        return true;
+        if($this->getRequestMethod()=== self::methodGet)
+            return true;
+        return false;
     }
 }

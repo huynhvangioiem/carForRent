@@ -86,13 +86,12 @@ class Response
 
     /**
      * @param string $route
-     * @return $this
+     * @return void
      */
-    public function redirect(string $route): Response
+    public function redirect(string $route)
     {
-        return $this;
+        header("Location: $route");
     }
-
 
     /**
      * @return int
@@ -173,4 +172,6 @@ class Response
     {
         $this->headers = $headers;
     }
+
+
 }
