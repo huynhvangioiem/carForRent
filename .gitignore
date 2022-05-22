@@ -3,3 +3,4 @@
 /coverage/
 /.phpunit.cache/
 .phpunit.result.cache
+.env
