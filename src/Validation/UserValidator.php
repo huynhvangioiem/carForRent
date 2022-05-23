@@ -20,9 +20,11 @@ class UserValidator implements ValidationInterface
     {
         if (empty($transfer->getUsername())) {
             throw new ValidationException('username is required');
+//            return false;
         }
         if (empty($transfer->getPassword())) {
-            throw new ValidationException('username is required');
+            throw new ValidationException('password is required');
+//            return false;
         }
     }
 }

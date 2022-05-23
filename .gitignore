@@ -5,6 +5,7 @@
 /vendor
 .env
 .env.backup
+.phpunit.cache
 .phpunit.result.cache
 docker-compose.override.yml
 /.idea
@@ -12,4 +13,5 @@ phpcbf.phar
 phpcs.phar
 phpunit.phar
 composer.phar
+/coverage
 *.phar

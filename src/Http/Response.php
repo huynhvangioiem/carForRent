@@ -40,7 +40,6 @@ class Response
         $this->statusCode = $statusCode;
         $this->template = $template;
         $this->options = $options;
-
         return $this;
     }
 

@@ -4,8 +4,8 @@ namespace Tlait\CarForRent\Application;
 
 class Directory
 {
-    public static function getViewDir(): string
+    public static function render(string $template, array $options = null)
     {
-        return __DIR__ . '/../View/';
+        require __DIR__ . "/../View/".$template;
     }
 }

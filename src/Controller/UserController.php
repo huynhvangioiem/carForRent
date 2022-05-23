@@ -50,7 +50,9 @@ class UserController extends BaseController
             $params = $this->request->getFormParams();
             $userTransfer = new UserTransfer();
             $userTransfer->formArray($params);
+
             $this->userValidator->validate($userTransfer);
+
             $user = $this->userService->login($userTransfer);
             $this->sessionService->set("user", $user->getUsername());
             $this->response->redirect("/");

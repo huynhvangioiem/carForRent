@@ -11,7 +11,7 @@ class AbstractRepository
 
     public function __construct()
     {
-        $this->connection = Database::getConnection();
+        $this->setConnection(Database::getConnection());
     }
 
     /**

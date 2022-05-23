@@ -10,7 +10,7 @@ class View
     {
         http_response_code($response->getStatusCode());
         if (!empty($response->getTemplate())) {
-            require Directory::getViewDir() . $response->getTemplate();
+            Directory::render($response->getTemplate(),$response->getOptions());
         }
         if (!empty($response->getData())) {
             echo $response->getData();

@@ -23,6 +23,7 @@
                 <div id="login-box" class="col-md-12">
                     <form id="login-form" class="form" action="" method="post">
                         <h3 class="text-center text-info">Login</h3>
+                        <div style="text-align: center;color: red"><?php if(isset($options['message'])) echo $options['message'] ?></div>
                         <div class="form-group">
                             <label for="username" class="text-info">Username:</label><br>
                             <input type="email" name="username" id="username" class="form-control" required>

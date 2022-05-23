@@ -29,7 +29,7 @@ class Request
     /**
      * @return array
      */
-    public static function getFormParams()
+    public function getFormParams()
     {
         return $_REQUEST;
     }
