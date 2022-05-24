@@ -2,15 +2,14 @@
 
 namespace Tlait\CarForRent\Validation;
 
-use Exception;
 use Tlait\CarForRent\Transfer\TransferInterface;
 
 interface ValidationInterface
 {
     /**
      * @param TransferInterface $transfer
-     * @return bool
-     * @throws Exception
+     * @return array
      */
-    public function validate(TransferInterface $transfer): bool;
+    public function validate(TransferInterface $transfer): array;
+
 }

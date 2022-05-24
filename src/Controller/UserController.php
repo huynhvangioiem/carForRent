@@ -35,43 +35,60 @@ class UserController extends BaseController
 
     /**
      * @return Response|void
-     * @throws Exception
      */
     public function login()
     {
         $template = 'login.php';
+        // case user is logged
+        if ($this->sessionService->get('username') != null) {
+            return $this->response->redirect('/');
+        }
+
+        //case the user log in
         if ($this->request->isPost()) {
             try {
                 $params = $this->request->getFormParams();
                 $userTransfer = new UserTransfer();
                 $userTransfer->formArray($params);
 
-                $this->userValidator->validate($userTransfer);
+                $errorValidate = $this->userValidator->validate($userTransfer);
+                if (!empty($errorValidate)) {
+                    return $this->reRenderViewLogin($template, $errorValidate);
+                }
 
                 $user = $this->userService->login($userTransfer);
-                $this->sessionService->set("user", $user->getUsername());
-                $this->response->redirect("/");
-                return true;
-            } catch (PasswordInvalidException|ValidationException|UserNotFoundException $exception) {
-                return $this->response->view(
-                    $template,
-                    [
-                        'message' => $exception->getMessage(),
-                    ],
-                    Response::httpStatusBadRequest
-                );
+                if(is_array($user)){
+                    return $this->reRenderViewLogin($template, $user);
+                }
+                $this->sessionService->set("username", $user->getUsername());
+
+                return $this->response->redirect("/");
+            } catch (Exception $exception) {
+                return $this->reRenderViewLogin($template,[
+                    'errorMessage' => $exception->getMessage(),
+                ]);
             }
         }
-        if ($this->sessionService->get('user') != null){
-            $this->response->redirect('/');
-            return false;
-        }
+
+        //case other
         return $this->response->view($template);
     }
 
     public function logout()
     {
-        $this->sessionService->unset('user');
+        $this->sessionService->unset('username');
         $this->response->redirect("/");
+    }
+
+    /**
+     * @param String $template
+     * @param array $error
+     * @return Response
+     */
+    private function reRenderViewLogin(string $template, array $error)
+    {
+        return $this->response->view(
+            $template, $error
+        );
     }
 }

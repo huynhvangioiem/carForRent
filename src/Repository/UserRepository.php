@@ -6,18 +6,19 @@ use Tlait\CarForRent\Model\User;
 
 class UserRepository extends AbstractRepository
 {
-
     /**
      * @param string $userName
      * @return User|null
      */
-    public function findByUserName(string $userName): ?User
+    public function findByUserName(string $userName): User|null
     {
-        $result = $this->getConnection()->prepare("select * from user where user_name = ?");
-        $result->execute([$userName]);
-        $user = new User();
-        $row = $result->fetch();
+        $userSelected = $this->getConnection()->prepare("select * from user where user_name = ?");
+        $userSelected->execute([$userName]);
+        $row = $userSelected->fetch();
+
         if (!$row) return null;
+
+        $user = new User();
 
         $user->setId($row['user_id']);
         $user->setUsername($row['user_name']);
@@ -25,6 +26,7 @@ class UserRepository extends AbstractRepository
         $user->setName($row['user_fullname']);
         $user->setPhoneNumber($row['user_tel']);
         $user->setType($row['user_type']);
+
         return $user;
     }
 }

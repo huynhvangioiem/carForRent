@@ -2,8 +2,6 @@
 
 namespace Tlait\CarForRent\Service;
 
-use Tlait\CarForRent\Exception\PasswordInvalidException;
-use Tlait\CarForRent\Exception\UserNotFoundException;
 use Tlait\CarForRent\Model\User;
 use Tlait\CarForRent\Repository\UserRepository;
 use Tlait\CarForRent\Transfer\UserTransfer;
@@ -22,22 +20,21 @@ class UserService
 
     /**
      * @param UserTransfer $userTransfer
-     * @return User
-     * @throws PasswordInvalidException
-     * @throws UserNotFoundException
+     * @return array|User
+     *  if success with return a user object, else return an error message array
      */
-    public function login(UserTransfer $userTransfer): User
+    public function login(UserTransfer $userTransfer):array|User
     {
+
         $user = $this->userRepository->findByUserName($userTransfer->getUsername());
-        if (empty($user)) {
-            throw new UserNotFoundException();
+
+        if (
+            !empty($user) &&
+            $this->checkPassword($userTransfer->getPassword(), $user->getPassword())
+        ) {
+            return $user;
         }
-        $hashedPassword = $user->getPassword();
-        $plainPassword = $userTransfer->getPassword();
-        if(!$this->checkPassword($plainPassword, $hashedPassword)){
-            throw new PasswordInvalidException();
-        }
-        return $user;
+        return ['errorMessage' => "login failed!"];
     }
 
     private function checkPassword($plainPassword, $hashedPassword): bool

@@ -37,7 +37,7 @@ class Request
     /**
      * @return false|string
      */
-    public static function getRequestBody()
+    public function getRequestBody()
     {
         return file_get_contents('php://input');
     }

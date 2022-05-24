@@ -27,13 +27,13 @@ class UserServiceTest extends TestCase
         $userTransfer = new UserTransfer();
         $userTransfer->formArray($params);
 
-        $result = $userService->login($userTransfer);
+        $user = $userService->login($userTransfer);
 
-        $this->assertEquals($expected['id'], $result->getId());
-        $this->assertEquals($expected['name'], $result->getName());
-        $this->assertEquals($expected['username'], $result->getUsername());
-        $this->assertEquals($expected['userPhone'], $result->getPhoneNumber());
-        $this->assertEquals($expected['userType'], $result->getType());
+        $this->assertEquals($expected['id'], $user->getId());
+        $this->assertEquals($expected['name'], $user->getName());
+        $this->assertEquals($expected['username'], $user->getUsername());
+        $this->assertEquals($expected['userPhone'], $user->getPhoneNumber());
+        $this->assertEquals($expected['userType'], $user->getType());
 
     }
 
@@ -121,8 +121,8 @@ class UserServiceTest extends TestCase
         $userTransfer = new UserTransfer();
         $userTransfer->formArray($params);
 
-        $this->expectException(UserNotFoundException::class);
-        $userService->login($userTransfer);
+        $error = $userService->login($userTransfer);
+        $this->assertEquals($expected, $error['errorMessage']);
     }
 
     /**
@@ -137,7 +137,7 @@ class UserServiceTest extends TestCase
                     'password' => '231199',
                     'user' => null
                 ],
-                'expected' => null
+                'expected' => "login failed!"
             ],
             'notFoundCase2' => [
                 'params' => [
@@ -145,7 +145,7 @@ class UserServiceTest extends TestCase
                     'password' => '231199',
                     'user' => null
                 ],
-                'expected' => null
+                'expected' => "login failed!"
             ],
             'notFoundCase3' => [
                 'params' => [
@@ -153,7 +153,7 @@ class UserServiceTest extends TestCase
                     'password' => '231199',
                     'user' => null
                 ],
-                'expected' => null
+                'expected' => "login failed!"
             ],
         ];
     }
@@ -175,8 +175,8 @@ class UserServiceTest extends TestCase
         $userTransfer = new UserTransfer();
         $userTransfer->formArray($params);
 
-        $this->expectException(PasswordInvalidException::class);
-        $userService->login($userTransfer);
+        $error = $userService->login($userTransfer);
+        $this->assertEquals($expected, $error['errorMessage']);
 
 
     }
@@ -199,7 +199,7 @@ class UserServiceTest extends TestCase
                         0
                     )
                 ],
-                'expected' => []
+                'expected' => "login failed!"
             ],
             'passwordWrong2' => [
                 'params' => [
@@ -213,7 +213,7 @@ class UserServiceTest extends TestCase
                         0
                     )
                 ],
-                'expected' => []
+                'expected' => "login failed!"
             ],
             'passwordWrong3' => [
                 'params' => [
@@ -227,7 +227,7 @@ class UserServiceTest extends TestCase
                         0
                     )
                 ],
-                'expected' => []
+                'expected' => "login failed!"
             ],
         ];
     }

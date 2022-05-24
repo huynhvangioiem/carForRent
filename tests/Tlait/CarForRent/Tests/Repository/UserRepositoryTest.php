@@ -23,11 +23,11 @@ class UserRepositoryTest extends TestCase
      */
     public function testFindByUserNameSuccess($params, $expected)
     {
-        $result = $this->userRepository->findByUserName($params);
-        $this->assertEquals($expected['name'], $result->getName());
-        $this->assertEquals($expected['username'], $result->getUsername());
-        $this->assertEquals($expected['userPhone'], $result->getPhoneNumber());
-        $this->assertEquals($expected['userType'], $result->getType());
+        $user = $this->userRepository->findByUserName($params);
+        $this->assertEquals($expected['name'], $user->getName());
+        $this->assertEquals($expected['username'], $user->getUsername());
+        $this->assertEquals($expected['userPhone'], $user->getPhoneNumber());
+        $this->assertEquals($expected['userType'], $user->getType());
     }
 
     /**
@@ -39,7 +39,7 @@ class UserRepositoryTest extends TestCase
             'happy-case-1' => [
                 'params' => "tlait@gmail.com",
                 'expected' => [
-                    'name' => 'TLAIT',
+                    'name' => 'Huynh Van Gioi Em',
                     'username' => 'tlait@gmail.com',
                     'userPhone' => '0335687425',
                     'userType' => 0
@@ -54,10 +54,10 @@ class UserRepositoryTest extends TestCase
      * @param $expected
      * @return void
      */
-    public function testFindByUserNameNotFound($params, $expected)
+    public function testFindByUserNameNotFound($params)
     {
-        $result = $this->userRepository->findByUserName($params);
-        $this->assertEmpty($result);
+        $user = $this->userRepository->findByUserName($params);
+        $this->assertEmpty($user);
 
     }
 
@@ -69,7 +69,6 @@ class UserRepositoryTest extends TestCase
         return [
             'notFoundCase1' => [
                 'params' => "abc1123",
-                'expected' => []
             ]
         ];
     }
