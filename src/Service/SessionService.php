@@ -7,11 +7,12 @@ class SessionService
     /**
      * @param $key
      * @param $value
-     * @return void
+     * @return bool
      */
-    public function set($key, $value)
+    public function set($key, $value):bool
     {
         $_SESSION["$key"] = $value;
+        return true;
     }
 
     /**
@@ -26,10 +27,11 @@ class SessionService
 
     /**
      * @param string $key
-     * @return void
+     * @return bool
      */
-    public function unset(string $key)
+    public function unset(string $key):bool
     {
         unset($_SESSION["$key"]);
+        return true;
     }
 }

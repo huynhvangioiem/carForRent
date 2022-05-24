@@ -61,4 +61,14 @@ class Request
             return true;
         return false;
     }
+
+    /**
+     * @return bool
+     */
+    public function isPost(): bool
+    {
+        if ($this->getRequestMethod() === self::methodPost)
+            return true;
+        return false;
+    }
 }

@@ -40,31 +40,33 @@ class UserController extends BaseController
     public function login()
     {
         $template = 'login.php';
-        if ($this->sessionService->get('user') != null)
-            return $this->response->redirect('/');
+        if ($this->request->isPost()) {
+            try {
+                $params = $this->request->getFormParams();
+                $userTransfer = new UserTransfer();
+                $userTransfer->formArray($params);
 
-        if ($this->request->isGet()) {
-            return $this->response->view($template);
+                $this->userValidator->validate($userTransfer);
+
+                $user = $this->userService->login($userTransfer);
+                $this->sessionService->set("user", $user->getUsername());
+                $this->response->redirect("/");
+                return true;
+            } catch (PasswordInvalidException|ValidationException|UserNotFoundException $exception) {
+                return $this->response->view(
+                    $template,
+                    [
+                        'message' => $exception->getMessage(),
+                    ],
+                    Response::httpStatusBadRequest
+                );
+            }
         }
-        try {
-            $params = $this->request->getFormParams();
-            $userTransfer = new UserTransfer();
-            $userTransfer->formArray($params);
-
-            $this->userValidator->validate($userTransfer);
-
-            $user = $this->userService->login($userTransfer);
-            $this->sessionService->set("user", $user->getUsername());
-            $this->response->redirect("/");
-        } catch (PasswordInvalidException|ValidationException|UserNotFoundException $exception) {
-            return $this->response->view(
-                $template,
-                [
-                    'message' => $exception->getMessage(),
-                ],
-                Response::httpStatusBadRequest
-            );
+        if ($this->sessionService->get('user') != null){
+            $this->response->redirect('/');
+            return false;
         }
+        return $this->response->view($template);
     }
 
     public function logout()
