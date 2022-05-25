@@ -3,9 +3,7 @@
 namespace Tlait\CarForRent\Controller;
 
 use Exception;
-use Tlait\CarForRent\Exception\PasswordInvalidException;
-use Tlait\CarForRent\Exception\UserNotFoundException;
-use Tlait\CarForRent\Exception\ValidationException;
+
 use Tlait\CarForRent\Http\Request;
 use Tlait\CarForRent\Http\Response;
 use Tlait\CarForRent\Service\SessionService;
@@ -77,7 +75,7 @@ class UserController extends BaseController
     public function logout()
     {
         $this->sessionService->unset('username');
-        $this->response->redirect("/");
+        return $this->response->redirect("/");
     }
 
     /**
@@ -88,7 +86,7 @@ class UserController extends BaseController
     private function reRenderViewLogin(string $template, array $error)
     {
         return $this->response->view(
-            $template, $error
+            $template, $error, "400"
         );
     }
 }

@@ -7,5 +7,6 @@ class Directory
     public static function render(string $template, array $options = null)
     {
         require __DIR__ . "/../View/".$template;
+        return true;
     }
 }

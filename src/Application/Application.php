@@ -8,13 +8,24 @@ use Tlait\CarForRent\Http\Response;
 
 class Application
 {
+    private Request $request;
+
+    /**
+     * @param Request $request
+     */
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
+
     /**
      * @return false|Route
      */
     private function getRoute()
     {
-        $method = Request::getRequestMethod();
-        $uri = Request::getRequestUri();
+        $method = $this->request->getRequestMethod();
+        $uri = $this->request->getRequestUri();
         $routes = RouteConfig::getRoutes();
         foreach ($routes as $route) {
             if ($route->getMethod() !== $method || $route->getUri() !== $uri) {
@@ -40,6 +51,6 @@ class Application
         /** @var Response $response */
         $response = $controller->{$actionName}();
         $view = new View();
-        $view->handle($response);
+        return $view->handle($response);
     }
 }

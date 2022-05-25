@@ -34,6 +34,7 @@ class Response
      * @param int $statusCode
      * @return $this
      */
+    /*
     public function success(array $data = [], int $statusCode = Response::httpStatusOK): Response
     {
         $data = [
@@ -47,13 +48,14 @@ class Response
         $this->data = json_encode($data);
 
         return $this;
-    }
+    }*/
 
     /**
      * @param string|null $message
      * @param int $statusCode
      * @return $this
      */
+    /*
     public function error(?string $message = 'Some thing wrong', int $statusCode = Response::httpStatusBadRequest): Response
     {
         $data = [
@@ -67,17 +69,16 @@ class Response
         $this->data = json_encode($data);
 
         return $this;
-    }
+    }*/
 
     /**
      * @param string $route
-     * @return void
+     * @return $this
      */
-    public function redirect(string $route): void
+    public function redirect(string $route)
     {
-//        header("Location: $route");
-        var_dump(header("Location: $route"));
-        die();
+        header("Location: $route");
+        return $this;
     }
 
     /**

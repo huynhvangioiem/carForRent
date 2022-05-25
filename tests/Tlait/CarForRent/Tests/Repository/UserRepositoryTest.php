@@ -39,7 +39,7 @@ class UserRepositoryTest extends TestCase
             'happy-case-1' => [
                 'params' => "tlait@gmail.com",
                 'expected' => [
-                    'name' => 'Huynh Van Gioi Em',
+                    'name' => 'TLAIT',
                     'username' => 'tlait@gmail.com',
                     'userPhone' => '0335687425',
                     'userType' => 0

@@ -33,7 +33,7 @@ class UserControllerTest extends TestCase
 
     /**
      * @dataProvider loginSuccessProvider
-     * @runInSeparateProcess
+     * //     * @runInSeparateProcess
      * @param $params
      * @return void
      */
@@ -52,10 +52,10 @@ class UserControllerTest extends TestCase
         $userController = new UserController($requestMock, $this->response, $this->userValidator, $userServiceMock, $sessionServiceMock);
         $result = $userController->login();
 
-//        $expectedResult = new Response();
-//        $expectedResult->redirect('/');
+        $expectedResult = new Response();
+        $expectedResult->redirect('/');
 
-//        $this->assertEquals($expectedResult, $result);
+        $this->assertEquals($expectedResult, $result);
 
     }
 
@@ -98,10 +98,10 @@ class UserControllerTest extends TestCase
         $userController = new UserController($requestMock, $this->response, $this->userValidator, $userServiceMock, $sessionServiceMock);
         $result = $userController->login();
 
-//        $expectedResult = new Response();
-//        $expectedResult->redirect('/');
+        $expectedResult = new Response();
+        $expectedResult->redirect('/');
 
-//        $this->assertEquals($expectedResult, $result);
+        $this->assertEquals($expectedResult, $result);
 
     }
 
@@ -123,6 +123,129 @@ class UserControllerTest extends TestCase
                 'expected' => []
             ],
         ];
+    }
+
+
+    /**
+     * @dataProvider loginValidateFailProvider
+     * @runInSeparateProcess
+     * @param $params
+     * @return void
+     */
+    public function testLoginValidateFail($params)
+    {
+        $requestMock = $this->getMockBuilder(Request::class)->getMock();
+        $requestMock->expects($this->once())->method('getFormParams')->willReturn($params);
+        $requestMock->expects($this->once())->method('isPost')->willReturn(true);
+
+        $userServiceMock = $this->getMockBuilder(UserService::class)->disableOriginalConstructor()->getMock();
+
+        $sessionServiceMock = $this->getMockBuilder(SessionService::class)->getMock();
+
+        $userController = new UserController($requestMock, $this->response, $this->userValidator, $userServiceMock, $sessionServiceMock);
+        $result = $userController->login();
+
+        $expectedResult = new Response();
+        $expectedResult->view("login.php",[],"400");
+
+        $this->assertEquals($expectedResult->getStatusCode(), $result->getStatusCode());
+
+    }
+
+    /**
+     * @return array[]
+     */
+    public function loginValidateFailProvider(): array
+    {
+        return [
+            'case1' => [
+                'params' => [
+                    'username' => '',
+                    'password' => '231199',
+                    'user' => $this->getUser(
+                        'tlait@gmail.com',
+                        '231199',
+                        'Huynh Van Gioi Em',
+                        '0335687425',
+                        0
+                    )
+                ],
+                'expected' => []
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider loginFailProvider
+     * @runInSeparateProcess
+     * @param $params
+     * @return void
+     */
+    public function testLoginFail($params)
+    {
+        $requestMock = $this->getMockBuilder(Request::class)->getMock();
+        $requestMock->expects($this->once())->method('getFormParams')->willReturn($params);
+        $requestMock->expects($this->once())->method('isPost')->willReturn(true);
+
+        $userServiceMock = $this->getMockBuilder(UserService::class)->disableOriginalConstructor()->getMock();
+        $userServiceMock->expects($this->once())->method('login')->willReturn(['errorMessage' => "login failed!"]);
+
+        $sessionServiceMock = $this->getMockBuilder(SessionService::class)->getMock();
+
+        $userController = new UserController($requestMock, $this->response, $this->userValidator, $userServiceMock, $sessionServiceMock);
+        $result = $userController->login();
+
+        $expectedResult = new Response();
+        $expectedResult->view("login.php",[],"400");
+
+        $this->assertEquals($expectedResult->getStatusCode(), $result->getStatusCode());
+
+    }
+
+    /**
+     * @return array[]
+     */
+    public function loginFailProvider(): array
+    {
+        return [
+            'case1' => [
+                'params' => [
+                    'username' => 'tla231199@gmail.com',
+                    'password' => '231199',
+                    'user' => $this->getUser(
+                        'tlait@gmail.com',
+                        '231199',
+                        'Huynh Van Gioi Em',
+                        '0335687425',
+                        0
+                    )
+                ],
+                'expected' => []
+            ],
+        ];
+    }
+
+    /**
+     * @runInSeparateProcess
+     * @return void
+     */
+    public function testLogOut()
+    {
+        $requestMock = $this->getMockBuilder(Request::class)->getMock();
+
+        $userServiceMock = $this->getMockBuilder(UserService::class)->disableOriginalConstructor()->getMock();
+
+        $sessionServiceMock = $this->getMockBuilder(SessionService::class)->getMock();
+        $sessionServiceMock->expects($this->once())->method('unset')->willReturn(true);
+
+        $userController = new UserController($requestMock, $this->response, $this->userValidator, $userServiceMock, $sessionServiceMock);
+        $result = $userController->logout();
+
+        $expectedResult = new Response();
+        $expectedResult->redirect('/');
+
+        $this->assertEquals($expectedResult, $result);
+
     }
 
     private function getUser(string $userName, string $userPassword, string $name, string $phone, int $type): User

@@ -13,7 +13,7 @@ class Request
     /**
      * @return string
      */
-    public static function getRequestMethod(): string
+    public function getRequestMethod(): string
     {
         return $_SERVER['REQUEST_METHOD'];
     }
@@ -21,7 +21,7 @@ class Request
     /**
      * @return string
      */
-    public static function getRequestUri(): string
+    public function getRequestUri(): string
     {
         return $_SERVER['REQUEST_URI'];
     }
