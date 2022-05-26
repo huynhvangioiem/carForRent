@@ -34,8 +34,8 @@ class RouteConfig
     public static function getApiRoutes(): array
     {
         return [
-//            Route::get('/api', HomeApiController::class, 'getIndexAction'),
-//            Route::post('/api/login', UserApiController::class, 'postLoginAction'),
+        //            Route::get('/api', HomeApiController::class, 'getIndexAction'),
+        //            Route::post('/api/login', UserApiController::class, 'postLoginAction'),
         ];
     }
 }

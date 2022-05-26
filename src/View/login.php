@@ -24,19 +24,27 @@
                     <form id="login-form" class="form" action="" method="post">
                         <h3 class="text-center text-info">Login</h3>
                                                 <div style="text-align: center;color: red">
-                        <?php if (isset($options['errorMessage'])) echo $options['errorMessage'] ?></div>
+                        <?php
+
+                        if (isset($options['errorMessage'])) {
+                            echo $options['errorMessage'];
+                        } ?></div>
                         <div class="form-group">
                             <label for="username" class="text-info">Username:</label><br>
                             <input type="email" name="username" id="username" class="form-control" value="" required>
                             <div style="text-align: center;color: red">
-                                <?php if (isset($options['username'])) echo $options['username'] ?>
+                                <?php if (isset($options['username'])) {
+                                    echo $options['username'];
+                                } ?>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="password" class="text-info">Password:</label><br>
                             <input type="password" name="password" id="password" class="form-control" required>
                             <div style="text-align: center;color: red">
-                                <?php if (isset($options['password'])) echo $options['password'] ?>
+                                <?php if (isset($options['password'])) {
+                                    echo $options['password'];
+                                } ?>
                             </div>
 
                         </div>

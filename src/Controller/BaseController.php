@@ -11,7 +11,7 @@ abstract class BaseController
     protected Response $response;
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
      */
     public function __construct(Request $request, Response $response)
@@ -19,5 +19,4 @@ abstract class BaseController
         $this->request = $request;
         $this->response = $response;
     }
-
 }

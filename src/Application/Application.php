@@ -48,7 +48,9 @@ class Application
         $container = new Container();
 
         $controller = $container->make($controllerClassName);
-        /** @var Response $response */
+        /**
+ * @var Response $response
+*/
         $response = $controller->{$actionName}();
         $view = new View();
         return $view->handle($response);

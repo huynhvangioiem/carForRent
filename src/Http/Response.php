@@ -16,9 +16,9 @@ class Response
     private array $headers = [];
 
     /**
-     * @param string $template
-     * @param array $options
-     * @param int $statusCode
+     * @param  string $template
+     * @param  array  $options
+     * @param  int    $statusCode
      * @return $this
      */
     public function view(string $template, array $options = [], int $statusCode = Response::httpStatusOK): Response
@@ -30,8 +30,8 @@ class Response
     }
 
     /**
-     * @param array $data
-     * @param int $statusCode
+     * @param  array $data
+     * @param  int $statusCode
      * @return $this
      */
     /*
@@ -51,8 +51,8 @@ class Response
     }*/
 
     /**
-     * @param string|null $message
-     * @param int $statusCode
+     * @param  string|null $message
+     * @param  int $statusCode
      * @return $this
      */
     /*
@@ -72,7 +72,7 @@ class Response
     }*/
 
     /**
-     * @param string $route
+     * @param  string $route
      * @return $this
      */
     public function redirect(string $route)

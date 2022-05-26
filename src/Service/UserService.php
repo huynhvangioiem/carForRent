@@ -19,18 +19,18 @@ class UserService
     }
 
     /**
-     * @param UserTransfer $userTransfer
+     * @param  UserTransfer $userTransfer
      * @return array|User
      *  if success with return a user object, else return an error message array
      */
-    public function login(UserTransfer $userTransfer):array|User
+    public function login(UserTransfer $userTransfer): array | User
     {
 
         $user = $this->userRepository->findByUserName($userTransfer->getUsername());
 
         if (
-            !empty($user) &&
-            $this->checkPassword($userTransfer->getPassword(), $user->getPassword())
+            !empty($user)
+            && $this->checkPassword($userTransfer->getPassword(), $user->getPassword())
         ) {
             return $user;
         }
@@ -41,5 +41,4 @@ class UserService
     {
         return password_verify($plainPassword, $hashedPassword);
     }
-
 }

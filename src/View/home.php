@@ -22,7 +22,11 @@
 <body>
 
 <header>
-    <?php if (isset($_SESSION['user'])) echo $_SESSION['user'] ?>
+    <?php
+
+    if (isset($_SESSION['user'])) {
+        echo $_SESSION['user'];
+    } ?>
     <div class="collapse bg-dark" id="navbarHeader">
         <div class="container">
             <div class="row">

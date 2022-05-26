@@ -8,7 +8,7 @@ class UserValidator implements ValidationInterface
 {
 
     /**
-     * @param TransferInterface $transfer
+     * @param  TransferInterface $transfer
      * @return array
      * if success with return empty array, else return array with error message
      */
@@ -26,7 +26,7 @@ class UserValidator implements ValidationInterface
     }
 
     /**
-     * @param TransferInterface $transfer
+     * @param  TransferInterface $transfer
      * @return array
      * if success with return empty array, else return array with error message
      */
@@ -43,7 +43,7 @@ class UserValidator implements ValidationInterface
     }
 
     /**
-     * @param TransferInterface $transfer
+     * @param  TransferInterface $transfer
      * @return array
      * if success with return empty array, else return array with error message
      */

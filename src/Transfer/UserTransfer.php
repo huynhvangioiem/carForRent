@@ -8,7 +8,7 @@ class UserTransfer implements TransferInterface
     private ?string $password;
 
     /**
-     * @param array $params
+     * @param  array $params
      * @return $this
      */
     public function formArray(array $params): UserTransfer
@@ -27,7 +27,7 @@ class UserTransfer implements TransferInterface
     }
 
     /**
-     * @param string|null $username
+     * @param  string|null $username
      * @return $this
      */
     public function setUsername(?string $username): UserTransfer
@@ -45,7 +45,7 @@ class UserTransfer implements TransferInterface
     }
 
     /**
-     * @param string|null $password
+     * @param  string|null $password
      * @return $this
      */
     public function setPassword(?string $password): UserTransfer
@@ -53,6 +53,4 @@ class UserTransfer implements TransferInterface
         $this->password = $password;
         return $this;
     }
-
-
 }

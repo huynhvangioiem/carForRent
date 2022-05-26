@@ -10,13 +10,15 @@ class UserRepository extends AbstractRepository
      * @param string $userName
      * @return User|null
      */
-    public function findByUserName(string $userName): User|null
+    public function findByUserName(string $userName): User | null
     {
         $userSelected = $this->getConnection()->prepare("select * from user where user_name = ?");
         $userSelected->execute([$userName]);
         $row = $userSelected->fetch();
 
-        if (!$row) return null;
+        if (!$row) {
+            return null;
+        }
 
         $user = new User();
 

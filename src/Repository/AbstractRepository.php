@@ -4,6 +4,7 @@ namespace Tlait\CarForRent\Repository;
 
 use Tlait\CarForRent\Application\Database;
 use PDO;
+
 class AbstractRepository
 {
     private $connection;
@@ -29,5 +30,4 @@ class AbstractRepository
     {
         $this->connection = $connection;
     }
-
 }

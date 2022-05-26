@@ -3,7 +3,6 @@
 namespace Tlait\CarForRent\Controller;
 
 use Exception;
-
 use Tlait\CarForRent\Http\Request;
 use Tlait\CarForRent\Http\Response;
 use Tlait\CarForRent\Service\SessionService;
@@ -18,13 +17,12 @@ class UserController extends BaseController
     private SessionService $sessionService;
 
     public function __construct(
-        Request        $request,
-        Response       $response,
-        UserValidator  $userValidator,
-        UserService    $userService,
+        Request $request,
+        Response $response,
+        UserValidator $userValidator,
+        UserService $userService,
         SessionService $sessionService
-    )
-    {
+    ) {
         parent::__construct($request, $response);
         $this->userValidator = $userValidator;
         $this->userService = $userService;
@@ -55,16 +53,19 @@ class UserController extends BaseController
                 }
 
                 $user = $this->userService->login($userTransfer);
-                if(is_array($user)){
+                if (is_array($user)) {
                     return $this->reRenderViewLogin($template, $user);
                 }
                 $this->sessionService->set("username", $user->getUsername());
 
                 return $this->response->redirect("/");
             } catch (Exception $exception) {
-                return $this->reRenderViewLogin($template,[
+                return $this->reRenderViewLogin(
+                    $template,
+                    [
                     'errorMessage' => $exception->getMessage(),
-                ]);
+                    ]
+                );
             }
         }
 
@@ -79,14 +80,16 @@ class UserController extends BaseController
     }
 
     /**
-     * @param String $template
-     * @param array $error
+     * @param  String $template
+     * @param  array  $error
      * @return Response
      */
     private function reRenderViewLogin(string $template, array $error)
     {
         return $this->response->view(
-            $template, $error, "400"
+            $template,
+            $error,
+            "400"
         );
     }
 }
