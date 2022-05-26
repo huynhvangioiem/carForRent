@@ -4,30 +4,19 @@ namespace Tlait\CarForRent\Http;
 
 class Response
 {
-    const httpStatusOK = 200;
-    const httpStatusBadRequest = 400;
-    const httpStatusNotFound = 404;
+    const HTTP_OK = 200;
+    const HTTP_NOT_FOUND = 404;
+    const HTTP_INTERNAL_SERVER_ERROR = 500;
+    const HTTP_UNAUTHORIZED = 401;
+    const HTTP_FORBIDDEN = 403;
+    const HTTP_BAD_REQUEST = 400;
 
-    /**
-     * @var int
-     */
-    protected int $statusCode;
-    /**
-     * @var string|null
-     */
-    protected ?string $template = null;
-    /**
-     * @var array
-     */
-    protected array $options = [];
-    /**
-     * @var string|null
-     */
-    protected ?string $data = null;
-    /**
-     * @var array
-     */
-    protected array $headers = [];
+
+    private int $statusCode;
+    private ?string $template = null;
+    private array $options = [];
+    private ?string $data = null;
+    private array $headers = [];
 
     /**
      * @param string $template
@@ -35,27 +24,27 @@ class Response
      * @param int $statusCode
      * @return $this
      */
-    public function view(string $template, array $options = [], int $statusCode = Response::httpStatusOK): Response
+    public function view(string $template, array $options = [], int $statusCode = Response::HTTP_OK): Response
     {
-        $this->statusCode = $statusCode;
-        $this->template = $template;
-        $this->options = $options;
-
+        $this->setStatusCode($statusCode);
+        $this->setTemplate($template);
+        $this->setOptions($options);
         return $this;
     }
 
     /**
      * @param array $data
-     * @param $statusCode
+     * @param int $statusCode
      * @return $this
      */
-    public function success(array $data = [], $statusCode = Response::httpStatusOK): Response
+
+    public function success(array $data = [], int $statusCode = Response::HTTP_OK): Response
     {
         $data = [
             'status' => 'success',
             'data' => $data
         ];
-        $this->statusCode = $statusCode;
+        $this->setStatusCode($statusCode);
         $this->headers = array_merge($this->headers, [
             'Content-Type' => 'application/json'
         ]);
@@ -69,13 +58,14 @@ class Response
      * @param int $statusCode
      * @return $this
      */
-    public function error(?string $message = 'Some thing wrong', int $statusCode = Response::httpStatusBadRequest): Response
+
+    public function error( array $message = [], int $statusCode = Response::HTTP_BAD_REQUEST): Response
     {
         $data = [
             'status' => 'error',
             'message' => $message
         ];
-        $this->statusCode = $statusCode;
+        $this->setStatusCode($statusCode);
         $this->headers = array_merge($this->headers, [
             'Content-Type' => 'application/json'
         ]);
@@ -88,11 +78,11 @@ class Response
      * @param string $route
      * @return $this
      */
-    public function redirect(string $route): Response
+    public function redirect(string $route)
     {
+        header("Location: $route");
         return $this;
     }
-
 
     /**
      * @return int

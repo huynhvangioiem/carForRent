@@ -13,7 +13,7 @@ class Request
     /**
      * @return string
      */
-    public static function getRequestMethod(): string
+    public function getRequestMethod(): string
     {
         return $_SERVER['REQUEST_METHOD'];
     }
@@ -21,7 +21,15 @@ class Request
     /**
      * @return string
      */
-    public static function getRequestUri(): string
+    public function getHost(): string
+    {
+        return $_SERVER['HTTP_HOST'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequestUri(): string
     {
         return $_SERVER['REQUEST_URI'];
     }
@@ -29,15 +37,15 @@ class Request
     /**
      * @return array
      */
-    public static function getFormParams()
+    public function getFormParams()
     {
-        return [];
+        return $_REQUEST;
     }
 
     /**
      * @return false|string
      */
-    public static function getRequestBody()
+    public function getRequestBody()
     {
         return file_get_contents('php://input');
     }
@@ -57,6 +65,20 @@ class Request
      */
     public function isGet(): bool
     {
-        return true;
+        if ($this->getRequestMethod() === self::methodGet) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPost(): bool
+    {
+        if ($this->getRequestMethod() === self::methodPost) {
+            return true;
+        }
+        return false;
     }
 }

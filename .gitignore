@@ -1,5 +1,12 @@
-/vendor/
-.idea/
-/coverage/
-/.phpunit.cache/
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+.phpunit.cache
 .phpunit.result.cache
+/.idea
+/coverage
+*.phar

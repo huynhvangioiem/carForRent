@@ -3,6 +3,7 @@
 namespace Tlait\CarForRent\Application;
 
 use Tlait\CarForRent\Controller\HomeController;
+use Tlait\CarForRent\Controller\API\AuthenticateController;
 
 class RouteConfig
 {
@@ -21,7 +22,6 @@ class RouteConfig
     {
         return [
             Route::get('/', HomeController::class, 'getIndex'),
-//            Route::get('/login', UserLoginController::class, 'getLoginAction')
         ];
     }
 
@@ -31,8 +31,7 @@ class RouteConfig
     public static function getApiRoutes(): array
     {
         return [
-//            Route::get('/api', HomeApiController::class, 'getIndexAction'),
-//            Route::post('/api/login', UserApiController::class, 'postLoginAction'),
+            Route::post('/api/login', AuthenticateController::class, 'login'),
         ];
     }
 }

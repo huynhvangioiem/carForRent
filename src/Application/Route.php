@@ -39,9 +39,9 @@ class Route
 
 
     /**
-     * @param string $uri
-     * @param string $controllerClassName
-     * @param string $actionName
+     * @param  string $uri
+     * @param  string $controllerClassName
+     * @param  string $actionName
      * @return Route
      */
     public static function post(string $uri, string $controllerClassName, string $actionName): Route
@@ -50,9 +50,9 @@ class Route
     }
 
     /**
-     * @param string $uri
-     * @param string $controllerClassName
-     * @param string $actionName
+     * @param  string $uri
+     * @param  string $controllerClassName
+     * @param  string $actionName
      * @return Route
      */
     public static function get(string $uri, string $controllerClassName, string $actionName): Route
@@ -61,9 +61,9 @@ class Route
     }
 
     /**
-     * @param string $uri
-     * @param string $controllerClassName
-     * @param string $actionName
+     * @param  string $uri
+     * @param  string $controllerClassName
+     * @param  string $actionName
      * @return Route
      */
     public static function put(string $uri, string $controllerClassName, string $actionName): Route
@@ -72,9 +72,9 @@ class Route
     }
 
     /**
-     * @param string $uri
-     * @param string $controllerClassName
-     * @param string $actionName
+     * @param  string $uri
+     * @param  string $controllerClassName
+     * @param  string $actionName
      * @return Route
      */
     public static function delete(string $uri, string $controllerClassName, string $actionName): Route
@@ -83,8 +83,8 @@ class Route
     }
 
     /**
-     * @param string $method
-     * @param string $uri
+     * @param  string $method
+     * @param  string $uri
      * @return bool
      */
     public function match(string $method, string $uri): bool

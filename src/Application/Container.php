@@ -7,14 +7,13 @@ use Exception;
 use ReflectionClass;
 use ReflectionException;
 
-
 class Container
 {
     protected array $instances = [];
 
     /**
-     * @param $abstract
-     * @param $concrete
+     * @param  $abstract
+     * @param  $concrete
      * @return void
      */
     public function bind($abstract, $concrete = null)
@@ -28,8 +27,8 @@ class Container
     /**
      * Lấy ra instance từ Container
      *
-     * @param $abstract
-     * @param array $parameters
+     * @param  $abstract
+     * @param  array $parameters
      * @return mixed|object
      * @throws ReflectionException
      */
@@ -43,8 +42,8 @@ class Container
     }
 
     /**
-     * @param $concrete
-     * @param $parameters
+     * @param  $concrete
+     * @param  $parameters
      * @return mixed|object|null
      * @throws ReflectionException
      */
@@ -73,7 +72,7 @@ class Container
     }
 
     /**
-     * @param $parameters
+     * @param  $parameters
      * @return array
      * @throws ReflectionException
      */
@@ -99,5 +98,6 @@ class Container
 }
 /**
  * Learn more to understand
+ *
  * @link https://viblo.asia/p/tu-build-1-dependency-injection-container-voi-php-gDVK2mye5Lj
  */
