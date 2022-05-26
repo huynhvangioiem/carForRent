@@ -21,6 +21,14 @@ class Request
     /**
      * @return string
      */
+    public function getHost(): string
+    {
+        return $_SERVER['HTTP_HOST'];
+    }
+
+    /**
+     * @return string
+     */
     public function getRequestUri(): string
     {
         return $_SERVER['REQUEST_URI'];
