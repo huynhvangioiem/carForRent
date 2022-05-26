@@ -19,7 +19,7 @@ class UserService
     }
 
     /**
-     * @param  UserTransfer $userTransfer
+     * @param UserTransfer $userTransfer
      * @return array|User
      *  if success with return a user object, else return an error message array
      */
@@ -37,7 +37,7 @@ class UserService
         return ['errorMessage' => "login failed!"];
     }
 
-    private function checkPassword($plainPassword, $hashedPassword): bool
+    private function checkPassword(string | null $plainPassword, string $hashedPassword): bool
     {
         return password_verify($plainPassword, $hashedPassword);
     }

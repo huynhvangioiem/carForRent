@@ -63,7 +63,7 @@ class UserController extends BaseController
                 return $this->reRenderViewLogin(
                     $template,
                     [
-                    'errorMessage' => $exception->getMessage(),
+                        'errorMessage' => $exception->getMessage(),
                     ]
                 );
             }
@@ -73,15 +73,15 @@ class UserController extends BaseController
         return $this->response->view($template);
     }
 
-    public function logout()
+    public function logout(): Response
     {
         $this->sessionService->unset('username');
         return $this->response->redirect("/");
     }
 
     /**
-     * @param  String $template
-     * @param  array  $error
+     * @param String $template
+     * @param array $error
      * @return Response
      */
     private function reRenderViewLogin(string $template, array $error)
