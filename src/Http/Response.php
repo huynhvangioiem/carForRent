@@ -8,91 +8,78 @@ class Response
     const httpStatusBadRequest = 400;
     const httpStatusNotFound = 404;
 
-    /**
-     * @var int
-     */
-    protected int $statusCode;
-    /**
-     * @var string|null
-     */
-    protected ?string $template = null;
-    /**
-     * @var array
-     */
-    protected array $options = [];
-    /**
-     * @var string|null
-     */
-    protected ?string $data = null;
-    /**
-     * @var array
-     */
-    protected array $headers = [];
+
+    private int $statusCode;
+    private ?string $template = null;
+    private array $options = [];
+    private ?string $data = null;
+    private array $headers = [];
 
     /**
-     * @param string $template
-     * @param array $options
-     * @param int $statusCode
+     * @param  string $template
+     * @param  array  $options
+     * @param  int    $statusCode
      * @return $this
      */
     public function view(string $template, array $options = [], int $statusCode = Response::httpStatusOK): Response
     {
-        $this->statusCode = $statusCode;
-        $this->template = $template;
-        $this->options = $options;
-
+        $this->setStatusCode($statusCode);
+        $this->setTemplate($template);
+        $this->setOptions($options);
         return $this;
     }
 
     /**
-     * @param array $data
-     * @param $statusCode
+     * @param  array $data
+     * @param  int $statusCode
      * @return $this
      */
-    public function success(array $data = [], $statusCode = Response::httpStatusOK): Response
+    /*
+    public function success(array $data = [], int $statusCode = Response::httpStatusOK): Response
     {
         $data = [
             'status' => 'success',
             'data' => $data
         ];
-        $this->statusCode = $statusCode;
+        $this->setStatusCode($statusCode);
         $this->headers = array_merge($this->headers, [
             'Content-Type' => 'application/json'
         ]);
         $this->data = json_encode($data);
 
         return $this;
-    }
+    }*/
 
     /**
-     * @param string|null $message
-     * @param int $statusCode
+     * @param  string|null $message
+     * @param  int $statusCode
      * @return $this
      */
+    /*
     public function error(?string $message = 'Some thing wrong', int $statusCode = Response::httpStatusBadRequest): Response
     {
         $data = [
             'status' => 'error',
             'message' => $message
         ];
-        $this->statusCode = $statusCode;
+        $this->setStatusCode($statusCode);
         $this->headers = array_merge($this->headers, [
             'Content-Type' => 'application/json'
         ]);
         $this->data = json_encode($data);
 
         return $this;
-    }
+    }*/
 
     /**
-     * @param string $route
+     * @param  string $route
      * @return $this
      */
-    public function redirect(string $route): Response
+    public function redirect(string $route)
     {
+        header("Location: $route");
         return $this;
     }
-
 
     /**
      * @return int

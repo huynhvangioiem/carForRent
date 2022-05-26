@@ -22,6 +22,11 @@
 <body>
 
 <header>
+    <?php
+
+    if (isset($_SESSION['user'])) {
+        echo $_SESSION['user'];
+    } ?>
     <div class="collapse bg-dark" id="navbarHeader">
         <div class="container">
             <div class="row">
@@ -33,6 +38,11 @@
                     <h4 class="text-white">Contact</h4>
                     <ul class="list-unstyled">
                         <li><a href="/login" class="text-white">login</a></li>
+                        <li>
+                            <form action="/logout" method="post">
+                                <button name="btnSubmit" type="submit">logout</button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -58,7 +68,7 @@
 
 <main role="main">
 
-   <div class="album py-5 bg-light">
+    <div class="album py-5 bg-light">
         <div class="container">
 
             <div class="row">
