@@ -2,9 +2,8 @@
 
 namespace Tlait\CarForRent\Application;
 
+use Tlait\CarForRent\Controller\AuthenticateController;
 use Tlait\CarForRent\Controller\CarController;
-use Tlait\CarForRent\Controller\HomeController;
-use Tlait\CarForRent\Controller\API\AuthenticateAPIController;
 
 class RouteConfig
 {
@@ -23,6 +22,9 @@ class RouteConfig
     {
         return [
             Route::get('/', CarController::class, 'index'),
+            Route::get('/login', AuthenticateController::class, 'login'),
+            Route::post('/login', AuthenticateController::class, 'login'),
+            Route::post('/logout', AuthenticateController::class, 'logout'),
             Route::get('/addcar', CarController::class, 'showAdd'),
             Route::post('/addcar', CarController::class, 'addCar'),
         ];
