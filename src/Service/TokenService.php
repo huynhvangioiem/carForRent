@@ -2,8 +2,10 @@
 
 namespace Tlait\CarForRent\Service;
 
+use Dotenv\Dotenv;
 use Exception;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class TokenService
 {
@@ -12,13 +14,14 @@ class TokenService
     private int $issuedAt;
     private int $expire;
     private string $jwt;
+    private static $loadEnv;
 
     public function __construct()
     {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $this->issuedAt = time();
         $this->expire = $this->issuedAt + 3600;
-        $this->jwtSecret = "TlaitToken";
+        $this->jwtSecret = $this->setJwtSecret();
     }
 
     /**
@@ -34,7 +37,7 @@ class TokenService
             "aud" => $iss,
             "iat" => $this->issuedAt,
             "exp" => $this->expire,
-            "data" => $data
+            "payload" => $data
         );
 
         $this->jwt = JWT::encode($this->token, $this->jwtSecret, 'HS256');
@@ -44,10 +47,17 @@ class TokenService
     public function jwtDecodeData($jwtToken)
     {
         try {
-            $decode = JWT::decode($jwtToken, $this->jwtSecret, array('HS256'));
+            $decode = JWT::decode($jwtToken, new Key($this->jwtSecret, 'HS256'));
             return $decode->data;
         } catch (Exception $e) {
             return $e->getMessage();
         }
+    }
+
+    private function setJwtSecret()
+    {
+        self::$loadEnv = LoadEnvService::getConnection();
+        self::$loadEnv->load();
+        return $_ENV['TOKEN_SECRET'];
     }
 }

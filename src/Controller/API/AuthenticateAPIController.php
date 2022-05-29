@@ -10,7 +10,7 @@ use Tlait\CarForRent\Service\UserService;
 use Tlait\CarForRent\Transfer\UserTransfer;
 use Tlait\CarForRent\Validation\UserValidator;
 
-class AuthenticateController extends BaseController
+class AuthenticateAPIController extends BaseController
 {
     private UserValidator $userValidator;
     private UserService $userService;
@@ -49,16 +49,17 @@ class AuthenticateController extends BaseController
             return $this->response->error($user, Response::HTTP_UNAUTHORIZED);
         }
 
-        $userTokenData = [
+        $userTokenPayload = [
             'id' => $user->getId(),
             'username' => $user->getUsername(),
         ];
-        $data = $this->tokenService->jwtEncodeData(
+        $token = $this->tokenService->jwtEncodeData(
             $this->request->getHost() . $this->request->getRequestUri(),
-            $userTokenData);
+            $userTokenPayload
+        );
         return $this->response->success([
             "username" => $user->getUsername(),
-            "token" => $data
+            "token" => $token
         ]);
     }
 }

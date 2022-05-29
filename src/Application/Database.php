@@ -5,6 +5,7 @@ namespace Tlait\CarForRent\Application;
 use Dotenv\Dotenv;
 use PDO;
 use PDOException;
+use Tlait\CarForRent\Service\LoadEnvService;
 
 class Database
 {
@@ -17,7 +18,7 @@ class Database
     public static function getConnection(): PDO
     {
         if (empty(self::$connection)) {
-            self::$loadEnv = Dotenv::createImmutable(__DIR__ . '/../../');
+            self::$loadEnv = LoadEnvService::getConnection();
             self::$loadEnv->load();
             $host = $_ENV['DATABASE_HOST'];
             $username = $_ENV['DATABASE_USER'];
