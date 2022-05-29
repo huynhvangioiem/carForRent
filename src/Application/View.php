@@ -6,7 +6,11 @@ use Tlait\CarForRent\Http\Response;
 
 class View
 {
-    public function handle(Response $response)
+    /**
+     * @param Response $response
+     * @return bool
+     */
+    public function handle(Response $response): bool
     {
         if (!empty($response->getTemplate())) {
             return Directory::render($response->getTemplate(), $response->getOptions());
@@ -14,7 +18,11 @@ class View
         return $this->viewJson($response);
     }
 
-    private function viewJson(Response $response)
+    /**
+     * @param Response $response
+     * @return bool
+     */
+    private function viewJson(Response $response): bool
     {
         http_response_code($response->getStatusCode());
         foreach ($response->getHeaders() as $key => $value) {

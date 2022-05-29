@@ -43,6 +43,14 @@ class Request
     }
 
     /**
+     * @return array
+     */
+    public function getFiles()
+    {
+        return $_FILES;
+    }
+
+    /**
      * @return false|string
      */
     public function getRequestBody()

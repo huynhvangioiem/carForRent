@@ -6,7 +6,6 @@ use Tlait\CarForRent\Http\Response;
 
 class NotFoundController extends BaseController
 {
-
     public const INDEX_ACTION = 'index';
 
     /**
@@ -15,6 +14,6 @@ class NotFoundController extends BaseController
     public function index(): Response
     {
         $template = "404.php";
-        return $this->response->view($template, [], Response::httpStatusNotFound);
+        return $this->response->view($template, [], Response::HTTP_NOT_FOUND);
     }
 }

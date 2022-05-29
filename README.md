@@ -10,8 +10,8 @@ Author: Huynh Van Gioi Em - TLAIT
 - XDEBUG_MODE=coverage ./vendor/bin/phpunit tests --coverage-html coverage
 
 * PHPCS
-- phpcs --standard=PSR12 ./src
-- phpcbf --standard=PSR12 ./src
+- ./vendor/bin/phpcs --standard=PSR12 ./src
+- ./vendor/bin/phpcbf --standard=PSR12 ./src
 
 *PSALM
 - ./vendor/bin/psalm

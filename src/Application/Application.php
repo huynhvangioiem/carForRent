@@ -28,7 +28,7 @@ class Application
         $uri = $this->request->getRequestUri();
         $routes = RouteConfig::getRoutes();
         foreach ($routes as $route) {
-            if ($route->getMethod() !== $method || $route->getUri() !== $uri) {
+            if (!$route->match($method, $uri)) {
                 continue;
             }
             return $route;
@@ -49,8 +49,8 @@ class Application
 
         $controller = $container->make($controllerClassName);
         /**
- * @var Response $response
-*/
+         * @var Response $response
+         */
         $response = $controller->{$actionName}();
         $view = new View();
         return $view->handle($response);

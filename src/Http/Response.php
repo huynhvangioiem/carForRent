@@ -59,7 +59,7 @@ class Response
      * @return $this
      */
 
-    public function error( array $message = [], int $statusCode = Response::HTTP_BAD_REQUEST): Response
+    public function error(array $message = [], int $statusCode = Response::HTTP_BAD_REQUEST): Response
     {
         $data = [
             'status' => 'error',

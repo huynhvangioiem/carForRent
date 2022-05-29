@@ -7,7 +7,7 @@ use Tlait\CarForRent\Transfer\TransferInterface;
 interface ValidationInterface
 {
     /**
-     * @param  TransferInterface $transfer
+     * @param TransferInterface $transfer
      * @return array
      */
     public function validate(TransferInterface $transfer): array;

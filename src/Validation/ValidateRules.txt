@@ -1,0 +1,61 @@
+<?php
+
+namespace Tlait\CarForRent\Validation;
+
+use Exception;
+use Tlait\CarForRent\Transfer\TransferInterface;
+
+class  ValidateRules
+{
+    protected function handleValidate(array $validateData, array $validateRules): array
+    {
+        $error = array();
+        foreach ($validateData as $fieldName => $value) {
+            foreach ($validateRules[$fieldName] as $index => $rule) {
+                $rule = explode(":", $rule);
+                $ruleName = $rule[0];
+                $ruleValue = $rule[1] ?? null;
+                switch ($ruleName) {
+                    case "required":
+                        $requiredValidate = $this->requiredValidate($fieldName, $value);
+                        $error = $requiredValidate ? array_merge($error, array($fieldName => $requiredValidate)) : $error;
+                        break;
+                    case "max":
+                        $maxValidate = $this->maxValidate($fieldName, $value, $ruleValue);
+                        $error = $maxValidate ? array_merge($error, array($fieldName => $maxValidate)) : $error;
+                        break;
+                    default:
+                        throw new Exception("$ruleName not support!");
+                }
+            }
+        }
+        return $error;
+    }
+
+    /**
+     * @param $key
+     * @param $value
+     * @return string
+     */
+    private function requiredValidate($fieldName, $value): string
+    {
+        if (empty($value)) {
+            return ucfirst($fieldName) . " is required!";
+        }
+        return "";
+    }
+
+    private function maxValidate($fieldName, $value, $ruleValue): string
+    {
+        if (is_string($value)) {
+            if (strlen($value) > (int)$ruleValue) {
+                return ucfirst($fieldName) . " must not exceed $ruleValue characters!";
+            }
+            return "";
+        }
+        if ($value > $ruleValue) {
+            return ucfirst($fieldName) . " must not rather than $ruleValue!";
+        }
+        return "";
+    }
+}
