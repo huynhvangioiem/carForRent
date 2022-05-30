@@ -12,7 +12,7 @@ class UserRepository extends AbstractRepository
      */
     public function findByUserName(string $userName): User | null
     {
-        $userSelected = $this->getConnection()->prepare("select * from user where user_name = ?");
+        $userSelected = $this->getConnection()->prepare("select * from user where username = ?");
         $userSelected->execute([$userName]);
         $row = $userSelected->fetch();
 
@@ -22,12 +22,12 @@ class UserRepository extends AbstractRepository
 
         $user = new User();
 
-        $user->setId($row['user_id']);
-        $user->setUsername($row['user_name']);
-        $user->setPassword($row['user_password']);
-        $user->setName($row['user_fullname']);
-        $user->setPhoneNumber($row['user_tel']);
-        $user->setType($row['user_type']);
+        $user->setId($row['id']);
+        $user->setUsername($row['username']);
+        $user->setPassword($row['password']);
+        $user->setName($row['fullname']);
+        $user->setPhoneNumber($row['tel']);
+        $user->setType($row['type']);
 
         return $user;
     }

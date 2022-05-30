@@ -89,7 +89,7 @@ class AuthenticateController extends BaseController
         return $this->response->view(
             $template,
             $error,
-            "400"
+            400
         );
     }
 }

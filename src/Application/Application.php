@@ -46,7 +46,12 @@ class Application
             $actionName = $route->getActionName();
         }
         $container = new Container();
-
+        /** @var Acl $acl */
+        $acl = $container->make(Acl::class);
+        $acl->setRoute($route);
+        if (!$acl->canAccess()) {
+            // return 403;
+        }
         $controller = $container->make($controllerClassName);
         /**
          * @var Response $response

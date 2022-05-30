@@ -4,25 +4,29 @@ namespace Tlait\CarForRent\Model;
 
 class User
 {
-    private int $id;
+    public const ROLE_GUEST = -1;
+    public const ROLE_MEMBER = 1;
+    public const ROLE_ADMIN = 0;
+
+    private string $id;
     private string $name;
     private string $username;
     private string $password;
     private string $phoneNumber;
-    private string $type;
+    private int $type;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * @param string $id
      */
-    public function setId(int $id): void
+    public function setId(string $id): void
     {
         $this->id = $id;
     }
@@ -92,17 +96,17 @@ class User
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getType(): string
+    public function getType(): int
     {
         return $this->type;
     }
 
     /**
-     * @param string $type
+     * @param int $type
      */
-    public function setType(string $type): void
+    public function setType(int $type): void
     {
         $this->type = $type;
     }

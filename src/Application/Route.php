@@ -3,6 +3,7 @@
 namespace Tlait\CarForRent\Application;
 
 use Tlait\CarForRent\Http\Request;
+use Tlait\CarForRent\Model\User;
 
 class Route
 {
@@ -22,6 +23,10 @@ class Route
      * @var string
      */
     protected string $actionName;
+    /**
+     * @var int
+     */
+    protected int $role;
 
     /**
      * @param string $method
@@ -29,62 +34,62 @@ class Route
      * @param string $controllerClassName
      * @param string $actionName
      */
-    public function __construct(string $method, string $uri, string $controllerClassName, string $actionName)
+    public function __construct(string $method, string $uri, string $controllerClassName, string $actionName, int $role)
     {
         $this->setMethod($method);
         $this->setUri($uri);
         $this->setControllerClassName($controllerClassName);
         $this->setActionName($actionName);
+        $this->setRole($role);
     }
 
-
     /**
-     * @param  string $uri
-     * @param  string $controllerClassName
-     * @param  string $actionName
+     * @param string $uri
+     * @param string $controllerClassName
+     * @param string $actionName
      * @return Route
      */
-    public static function post(string $uri, string $controllerClassName, string $actionName): Route
+    public static function post(string $uri, string $controllerClassName, string $actionName, int $role = User::ROLE_GUEST): Route
     {
-        return new static(Request::methodPost, $uri, $controllerClassName, $actionName);
+        return new static(Request::methodPost, $uri, $controllerClassName, $actionName, $role);
     }
 
     /**
-     * @param  string $uri
-     * @param  string $controllerClassName
-     * @param  string $actionName
+     * @param string $uri
+     * @param string $controllerClassName
+     * @param string $actionName
      * @return Route
      */
-    public static function get(string $uri, string $controllerClassName, string $actionName): Route
+    public static function get(string $uri, string $controllerClassName, string $actionName, int $role = User::ROLE_GUEST): Route
     {
-        return new static(Request::methodGet, $uri, $controllerClassName, $actionName);
+        return new static(Request::methodGet, $uri, $controllerClassName, $actionName, $role);
     }
 
     /**
-     * @param  string $uri
-     * @param  string $controllerClassName
-     * @param  string $actionName
+     * @param string $uri
+     * @param string $controllerClassName
+     * @param string $actionName
      * @return Route
      */
-    public static function put(string $uri, string $controllerClassName, string $actionName): Route
+    public static function put(string $uri, string $controllerClassName, string $actionName, int $role = User::ROLE_GUEST): Route
     {
-        return new static(Request::methodPut, $uri, $controllerClassName, $actionName);
+        return new static(Request::methodPut, $uri, $controllerClassName, $actionName, $role);
     }
 
     /**
-     * @param  string $uri
-     * @param  string $controllerClassName
-     * @param  string $actionName
+     * @param string $uri
+     * @param string $controllerClassName
+     * @param string $actionName
      * @return Route
      */
-    public static function delete(string $uri, string $controllerClassName, string $actionName): Route
+    public static function delete(string $uri, string $controllerClassName, string $actionName, int $role = User::ROLE_GUEST): Route
     {
-        return new static(Request::methodDelete, $uri, $controllerClassName, $actionName);
+        return new static(Request::methodDelete, $uri, $controllerClassName, $actionName, $role);
     }
 
     /**
-     * @param  string $method
-     * @param  string $uri
+     * @param string $method
+     * @param string $uri
      * @return bool
      */
     public function match(string $method, string $uri): bool
@@ -155,4 +160,22 @@ class Route
     {
         $this->actionName = $actionName;
     }
+
+    /**
+     * @return int
+     */
+    public function getRole(): int
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param int $role
+     */
+    public function setRole(int $role): void
+    {
+        $this->role = $role;
+    }
+
+
 }
