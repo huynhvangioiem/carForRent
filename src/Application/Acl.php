@@ -11,10 +11,10 @@ use Tlait\CarForRent\Service\UserService;
 class Acl
 {
     private Route $route;
-    private Request $request;
+//    private Request $request;
     private SessionService $sessionService;
-    private TokenService $tokenService;
-    private UserService $userService;
+//    private TokenService $tokenService;
+//    private UserService $userService;
     private UserRepository $userRepository;
 
     /**
@@ -39,16 +39,14 @@ class Acl
 
     public function canAccess()
     {
-        $role = $this->route->getRole();
+        $roleRoute = $this->route->getRole();
         $sessionUserName = $this->sessionService->get("username");
         if (!$sessionUserName) {
-            return false;
+            $roleUser = -1;
+            return $roleRoute === $roleUser;
         }
         $user = $this->userRepository->findByUserName($sessionUserName);
-//        if($user->getType() == ){
-//
-//        }
-        var_dump($user);
+        return $roleRoute <= $user->getType();
     }
 
     public function setRoute(Route $route): Acl

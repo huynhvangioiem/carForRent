@@ -66,16 +66,18 @@ class CarController extends BaseController
                 return $this->reRenderView($template, $errorValidate);
             }
 
+            $car = $this->carService->createCar($carTransfer);
+            if (empty($car)) {
+                return $this->reRenderView($template, ['messageError' => "Some thing is wrong!"]);
+            }
+
             if ($carImg['name']) {
                 $errorUploadFile = $this->uploadFileService->handleUpload($carImg, "img/", "image", 500000);
                 if ($errorUploadFile) {
                     return $this->reRenderView($template, ['messageError' => $errorUploadFile]);
                 }
             }
-            $car = $this->carService->createCar($carTransfer);
-            if (empty($car)) {
-                return $this->reRenderView($template, ['messageError' => "Some thing is wrong!"]);
-            }
+
             return $this->response->redirect("/");
         } catch (Exception $exception) {
             return $this->reRenderView($template, ['messageError' => $exception->getMessage()]);

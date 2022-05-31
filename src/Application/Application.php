@@ -2,6 +2,7 @@
 
 namespace Tlait\CarForRent\Application;
 
+use Tlait\CarForRent\Controller\CarController;
 use Tlait\CarForRent\Controller\NotFoundController;
 use Tlait\CarForRent\Http\Request;
 use Tlait\CarForRent\Http\Response;
@@ -41,16 +42,17 @@ class Application
         $controllerClassName = NotFoundController::class;
         $actionName = NotFoundController::INDEX_ACTION;
         $route = $this->getRoute();
+
+        $container = new Container();
+        $accessResult = true;
         if ($route) {
             $controllerClassName = $route->getControllerClassName();
             $actionName = $route->getActionName();
-        }
-        $container = new Container();
-        /** @var Acl $acl */
-        $acl = $container->make(Acl::class);
-        $acl->setRoute($route);
-        if (!$acl->canAccess()) {
-            // return 403;
+
+            /** @var Acl $acl */
+            $acl = $container->make(Acl::class);
+            $acl->setRoute($route);
+            $accessResult = $acl->canAccess();
         }
         $controller = $container->make($controllerClassName);
         /**
@@ -58,6 +60,9 @@ class Application
          */
         $response = $controller->{$actionName}();
         $view = new View();
+        if(!$accessResult){
+            return $view->handle($response->redirect("/"));
+        }
         return $view->handle($response);
     }
 }
